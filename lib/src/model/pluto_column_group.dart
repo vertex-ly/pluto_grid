@@ -1,17 +1,18 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
-class PlutoColumnGroup {
+class PlutoColumnGroup extends Equatable {
   final String title;
 
   final List<String>? fields;
 
   final List<PlutoColumnGroup>? children;
 
-  double? titlePadding;
+  final double? titlePadding;
 
   /// Text alignment in Cell. (Left, Right, Center)
-  PlutoColumnTextAlign titleTextAlign;
+  final PlutoColumnTextAlign titleTextAlign;
 
   /// Customize the column with TextSpan or WidgetSpan instead of the column's title string.
   ///
@@ -28,7 +29,7 @@ class PlutoColumnGroup {
   ///   ],
   /// ),
   /// ```
-  InlineSpan? titleSpan;
+  final InlineSpan? titleSpan;
 
   PlutoColumnGroup({
     required this.title,
@@ -53,14 +54,28 @@ class PlutoColumnGroup {
   late final bool hasFields;
 
   late final bool hasChildren;
+
+  @override
+  List<Object?> get props => [
+        title,
+        fields,
+        children,
+        titlePadding,
+        titleTextAlign,
+        titleSpan,
+      ];
 }
 
-class PlutoColumnGroupPair {
-  PlutoColumnGroup group;
-  List<PlutoColumn> columns;
+class PlutoColumnGroupPair extends Equatable {
+  final PlutoColumnGroup group;
+
+  final List<PlutoColumn> columns;
 
   PlutoColumnGroupPair({
     required this.group,
     required this.columns,
   });
+
+  @override
+  List<Object?> get props => [group, columns];
 }

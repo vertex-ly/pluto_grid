@@ -1,7 +1,8 @@
+import 'package:equatable/equatable.dart';
 import 'package:intl/intl.dart' as intl;
 
-abstract class PlutoColumnType {
-  dynamic defaultValue;
+abstract class PlutoColumnType implements Equatable {
+  dynamic get defaultValue;
 
   /// Set as a string column.
   factory PlutoColumnType.text({
@@ -155,11 +156,11 @@ extension PlutoColumnTypeExtension on PlutoColumnType? {
   }
 }
 
-class PlutoColumnTypeText implements PlutoColumnType {
-  dynamic defaultValue;
+class PlutoColumnTypeText extends Equatable implements PlutoColumnType {
+  final dynamic defaultValue;
 
   PlutoColumnTypeText({
-    this.defaultValue,
+    this.defaultValue = '',
   });
 
   bool isValid(dynamic value) {
@@ -173,17 +174,20 @@ class PlutoColumnTypeText implements PlutoColumnType {
   dynamic makeCompareValue(dynamic v) {
     return v.toString();
   }
+
+  @override
+  List<Object?> get props => [defaultValue];
 }
 
-class PlutoColumnTypeNumber
+class PlutoColumnTypeNumber extends Equatable
     implements PlutoColumnType, _PlutoColumnTypeHasFormat {
-  dynamic defaultValue;
+  final dynamic defaultValue;
 
-  bool? negative;
+  final bool? negative;
 
-  String? format;
+  final String? format;
 
-  bool? applyFormatOnInit;
+  final bool? applyFormatOnInit;
 
   PlutoColumnTypeNumber({
     this.defaultValue,
@@ -239,14 +243,22 @@ class PlutoColumnTypeNumber
     }
     return double.tryParse(s.toString()) != null;
   }
+
+  @override
+  List<Object?> get props => [
+        defaultValue,
+        negative,
+        format,
+        applyFormatOnInit,
+      ];
 }
 
-class PlutoColumnTypeSelect implements PlutoColumnType {
-  dynamic defaultValue;
+class PlutoColumnTypeSelect extends Equatable implements PlutoColumnType {
+  final dynamic defaultValue;
 
-  List<dynamic>? items;
+  final List<dynamic>? items;
 
-  bool? enableColumnFilter;
+  final bool? enableColumnFilter;
 
   PlutoColumnTypeSelect({
     this.defaultValue,
@@ -269,19 +281,26 @@ class PlutoColumnTypeSelect implements PlutoColumnType {
   dynamic makeCompareValue(dynamic v) {
     return v;
   }
+
+  @override
+  List<Object?> get props => [
+        defaultValue,
+        items,
+        enableColumnFilter,
+      ];
 }
 
-class PlutoColumnTypeDate
+class PlutoColumnTypeDate extends Equatable
     implements PlutoColumnType, _PlutoColumnTypeHasFormat {
-  dynamic defaultValue;
+  final dynamic defaultValue;
 
-  DateTime? startDate;
+  final DateTime? startDate;
 
-  DateTime? endDate;
+  final DateTime? endDate;
 
-  String? format;
+  final String? format;
 
-  bool? applyFormatOnInit;
+  final bool? applyFormatOnInit;
 
   PlutoColumnTypeDate({
     this.defaultValue,
@@ -336,10 +355,19 @@ class PlutoColumnTypeDate
 
     return intl.DateFormat(format).format(DateTime.parse(value.toString()));
   }
+
+  @override
+  List<Object?> get props => [
+        defaultValue,
+        startDate,
+        endDate,
+        format,
+        applyFormatOnInit,
+      ];
 }
 
-class PlutoColumnTypeTime implements PlutoColumnType {
-  dynamic defaultValue;
+class PlutoColumnTypeTime extends Equatable implements PlutoColumnType {
+  final dynamic defaultValue;
 
   PlutoColumnTypeTime({
     this.defaultValue,
@@ -357,12 +385,15 @@ class PlutoColumnTypeTime implements PlutoColumnType {
   dynamic makeCompareValue(dynamic v) {
     return v;
   }
+
+  @override
+  List<Object?> get props => [defaultValue];
 }
 
 abstract class _PlutoColumnTypeHasFormat {
-  String? format;
+  String? get format;
 
-  bool? applyFormatOnInit;
+  bool? get applyFormatOnInit;
 
   dynamic applyFormat(dynamic value);
 }

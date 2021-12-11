@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
@@ -11,27 +12,28 @@ typedef PlutoColumnCheckReadOnly = bool Function(
   PlutoCell cell,
 );
 
-class PlutoColumn {
+// ignore: must_be_immutable
+class PlutoColumn extends Equatable {
   /// A title to be displayed on the screen.
   /// If a titleSpan value is set, the title value is not displayed.
-  String title;
+  final String title;
 
   /// Specifies the field name of the row to be connected to the column.
-  String field;
+  final String field;
 
   /// Set the column type.
-  PlutoColumnType type;
+  final PlutoColumnType type;
 
-  bool readOnly;
+  final bool readOnly;
 
   /// Set the width of the column.
   double width;
 
-  double minWidth;
+  final double minWidth;
 
   /// Customisable title padding.
   /// It takes precedence over defaultColumnTitlePadding in PlutoGridConfiguration.
-  double? titlePadding;
+  final double? titlePadding;
 
   /// Customize the column with TextSpan or WidgetSpan instead of the column's title string.
   ///
@@ -48,17 +50,17 @@ class PlutoColumn {
   ///   ],
   /// ),
   /// ```
-  InlineSpan? titleSpan;
+  final InlineSpan? titleSpan;
 
   /// Customisable cell padding.
   /// It takes precedence over defaultCellPadding in PlutoGridConfiguration.
-  double? cellPadding;
+  final double? cellPadding;
 
   /// Text alignment in Cell. (Left, Right, Center)
-  PlutoColumnTextAlign textAlign;
+  final PlutoColumnTextAlign textAlign;
 
   /// Text alignment in Title. (Left, Right, Center)
-  PlutoColumnTextAlign titleTextAlign;
+  final PlutoColumnTextAlign titleTextAlign;
 
   /// Freeze the column to the left and right.
   PlutoColumnFrozen frozen;
@@ -67,51 +69,51 @@ class PlutoColumn {
   PlutoColumnSort sort;
 
   /// Formatter for display of cell values.
-  PlutoColumnValueFormatter? formatter;
+  final PlutoColumnValueFormatter? formatter;
 
   /// Apply the formatter in the editing state.
   /// However, it is applied only when the cell is readonly
   /// or the text cannot be directly modified, such as in the form of select popup.
-  bool applyFormatterInEditing;
+  final bool applyFormatterInEditing;
 
   /// Rendering for cell widget.
-  PlutoColumnRenderer? renderer;
+  final PlutoColumnRenderer? renderer;
 
   /// Change the position of the column by dragging the column title.
-  bool enableColumnDrag;
+  final bool enableColumnDrag;
 
   /// Change the position of the row by dragging the icon in the cell.
-  bool enableRowDrag;
+  final bool enableRowDrag;
 
   /// A checkbox appears in the cell of the column.
-  bool enableRowChecked;
+  final bool enableRowChecked;
 
   /// Sort rows by tapping on the column heading.
-  bool enableSorting;
+  final bool enableSorting;
 
   /// Displays the right icon of the column title.
-  bool enableContextMenu;
+  final bool enableContextMenu;
 
   /// Display the right icon for drop to resize the column
   /// Valid only when [enableContextMenu] is disabled.
-  bool enableDropToResize;
+  final bool enableDropToResize;
 
   /// Displays filter-related menus in the column context menu.
   /// Valid only when [enableContextMenu] is activated.
-  bool enableFilterMenuItem;
+  final bool enableFilterMenuItem;
 
   /// Displays Hide column menu in the column context menu.
   /// Valid only when [enableContextMenu] is activated.
-  bool enableHideColumnMenuItem;
+  final bool enableHideColumnMenuItem;
 
   /// Displays Set columns menu in the column context menu.
   /// Valid only when [enableContextMenu] is activated.
-  bool enableSetColumnsMenuItem;
+  final bool enableSetColumnsMenuItem;
 
-  bool enableAutoEditing;
+  final bool enableAutoEditing;
 
   /// Entering the Enter key or tapping the cell enters the Editing mode.
-  bool? enableEditingMode;
+  final bool? enableEditingMode;
 
   /// Hide the column.
   bool hide;
@@ -146,7 +148,8 @@ class PlutoColumn {
     this.enableAutoEditing = false,
     this.enableEditingMode = true,
     this.hide = false,
-  })  : _key = UniqueKey(),
+    Key? key,
+  })  : _key = key ?? UniqueKey(),
         _checkReadOnly = checkReadOnly;
 
   /// Column key
@@ -218,6 +221,39 @@ class PlutoColumn {
 
     return value.toString();
   }
+
+  @override
+  List<Object?> get props => [
+        title,
+        field,
+        type,
+        readOnly,
+        hasCheckReadOnly,
+        width,
+        minWidth,
+        titlePadding,
+        titleSpan,
+        cellPadding,
+        textAlign,
+        titleTextAlign,
+        frozen,
+        sort,
+        formatter,
+        applyFormatterInEditing,
+        renderer,
+        enableColumnDrag,
+        enableRowDrag,
+        enableRowChecked,
+        enableSorting,
+        enableContextMenu,
+        enableDropToResize,
+        enableFilterMenuItem,
+        enableHideColumnMenuItem,
+        enableSetColumnsMenuItem,
+        enableAutoEditing,
+        enableEditingMode,
+        hide,
+      ];
 }
 
 class PlutoColumnRendererContext {
