@@ -46,11 +46,15 @@ abstract class ILayoutState {
 
   double get columnFilterHeight;
 
+  double get columnGroupContainerHeight;
+
   double get rowsTopOffset;
 
   double get rowHeight;
 
   double get rowTotalHeight;
+
+  double get rowContainerHeight;
 
   double get bodyTopOffset;
 
@@ -175,6 +179,10 @@ mixin LayoutState implements IPlutoGridState {
       showColumnFilter ? configuration!.columnFilterHeight : 0;
 
   @override
+  double get columnGroupContainerHeight =>
+      columnGroupHeight + columnHeight + columnFilterHeight;
+
+  @override
   double get rowsTopOffset =>
       headerHeight + columnGroupHeight + columnHeight + columnFilterHeight;
 
@@ -183,6 +191,15 @@ mixin LayoutState implements IPlutoGridState {
 
   @override
   double get rowTotalHeight => rowHeight + PlutoGridSettings.rowBorderWidth;
+
+  @override
+  double get rowContainerHeight =>
+      maxHeight! -
+      ((PlutoGridSettings.gridPadding + PlutoGridSettings.gridBorderWidth) *
+          2) -
+      headerHeight -
+      columnGroupContainerHeight -
+      footerHeight;
 
   @override
   double get bodyTopOffset =>

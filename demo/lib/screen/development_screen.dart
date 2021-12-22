@@ -255,7 +255,7 @@ class _DevelopmentScreenState extends State<DevelopmentScreen> {
             );
           },
           createFooter: (stateManager) {
-            stateManager.setPageSize(100, notify: false);
+            stateManager.setPageSize(20, notify: false);
             return PlutoPagination(stateManager);
           },
           rowColorCallback: (rowColorContext) {

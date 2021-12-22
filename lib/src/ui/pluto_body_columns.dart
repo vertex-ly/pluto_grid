@@ -92,6 +92,7 @@ class _PlutoBodyColumnsState extends _PlutoBodyColumnsStateWithChange {
   Widget build(BuildContext context) {
     return SizedBox(
       width: width,
+      height: widget.stateManager.columnGroupContainerHeight,
       child: ListView.builder(
         controller: scroll,
         scrollDirection: Axis.horizontal,

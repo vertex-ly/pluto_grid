@@ -66,6 +66,7 @@ class _PlutoLeftFrozenColumnsState
   Widget build(BuildContext context) {
     return SizedBox(
       width: width,
+      height: widget.stateManager.columnGroupContainerHeight,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         physics: const NeverScrollableScrollPhysics(),
