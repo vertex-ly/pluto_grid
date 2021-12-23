@@ -7,6 +7,9 @@ class PlutoGridConfiguration {
   /// border between columns.
   final bool enableColumnBorder;
 
+  /// Activate the shadow that separates each area of the grid.
+  final bool enableGridBorderShadow;
+
   /// Grid corners can be rounded.
   final BorderRadiusGeometry gridBorderRadius;
 
@@ -101,6 +104,7 @@ class PlutoGridConfiguration {
 
   const PlutoGridConfiguration({
     this.enableColumnBorder = false,
+    this.enableGridBorderShadow = false,
     this.gridBorderRadius = BorderRadius.zero,
     this.gridPopupBorderRadius = BorderRadius.zero,
     this.gridBackgroundColor = Colors.white,
@@ -142,6 +146,7 @@ class PlutoGridConfiguration {
 
   const PlutoGridConfiguration.dark({
     this.enableColumnBorder = false,
+    this.enableGridBorderShadow = false,
     this.gridBorderRadius = BorderRadius.zero,
     this.gridPopupBorderRadius = BorderRadius.zero,
     this.gridBackgroundColor = const Color(0xFF111111),
@@ -213,6 +218,7 @@ class PlutoGridConfiguration {
   PlutoGridConfiguration copyWith({
     bool? enableColumnBorder,
     bool? enableColumnGroupBorder,
+    bool? enableGridBorderShadow,
     BorderRadiusGeometry? gridBorderRadius,
     BorderRadiusGeometry? gridPopupBorderRadius,
     Color? gridBackgroundColor,
@@ -245,6 +251,8 @@ class PlutoGridConfiguration {
   }) {
     return PlutoGridConfiguration(
       enableColumnBorder: enableColumnBorder ?? this.enableColumnBorder,
+      enableGridBorderShadow:
+          enableGridBorderShadow ?? this.enableGridBorderShadow,
       gridBorderRadius: gridBorderRadius ?? this.gridBorderRadius,
       gridPopupBorderRadius:
           gridPopupBorderRadius ?? this.gridPopupBorderRadius,
