@@ -244,7 +244,7 @@ class _PlutoColumnFilterState extends _PlutoColumnFilterStateWithChange {
       padding: EdgeInsets.symmetric(horizontal: padding),
       decoration: BoxDecoration(
         border: Border(
-          top: BorderSide(
+          bottom: BorderSide(
             color: configuration.borderColor,
           ),
           right: configuration.enableColumnBorder

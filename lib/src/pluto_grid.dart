@@ -451,27 +451,35 @@ class _ColumnRowContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Row(
-        children: [
-          if (showFrozenColumn && hasLeftFrozenColumns)
-            _LeftContainer(
-              stateManager: stateManager,
-              width: stateManager.leftFrozenColumnsWidth,
-            ),
-          Expanded(
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: _BodyContainer(
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border(
+            top: BorderSide(color: stateManager.configuration!.borderColor),
+            bottom: BorderSide(color: stateManager.configuration!.borderColor),
+          ),
+        ),
+        child: Row(
+          children: [
+            if (showFrozenColumn && hasLeftFrozenColumns)
+              _LeftContainer(
                 stateManager: stateManager,
+                width: stateManager.leftFrozenColumnsWidth,
+              ),
+            Expanded(
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: _BodyContainer(
+                  stateManager: stateManager,
+                ),
               ),
             ),
-          ),
-          if (showFrozenColumn && hasRightFrozenColumns)
-            _RightContainer(
-              stateManager: stateManager,
-              width: stateManager.rightFrozenColumnsWidth,
-            ),
-        ],
+            if (showFrozenColumn && hasRightFrozenColumns)
+              _RightContainer(
+                stateManager: stateManager,
+                width: stateManager.rightFrozenColumnsWidth,
+              ),
+          ],
+        ),
       ),
     );
   }
