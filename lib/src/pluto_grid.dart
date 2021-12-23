@@ -353,6 +353,8 @@ class _PlutoGridState extends State<PlutoGrid> {
                 gridFocusNode?.requestFocus();
               }
 
+              final configuration = stateManager.configuration!;
+
               return Focus(
                 focusNode: stateManager.gridFocusNode,
                 child: ScrollConfiguration(
@@ -363,35 +365,38 @@ class _PlutoGridState extends State<PlutoGrid> {
                     padding:
                         const EdgeInsets.all(PlutoGridSettings.gridPadding),
                     decoration: BoxDecoration(
-                      color: stateManager.configuration!.gridBackgroundColor,
-                      borderRadius:
-                          stateManager.configuration!.gridBorderRadius,
+                      color: configuration.gridBackgroundColor,
+                      borderRadius: configuration.gridBorderRadius,
                       border: Border.all(
-                        color: stateManager.configuration!.gridBorderColor,
+                        color: configuration.gridBorderColor,
                         width: PlutoGridSettings.gridBorderWidth,
                       ),
                     ),
-                    child: Column(
-                      children: [
-                        if (stateManager.showHeader)
-                          _HeaderContainer(
-                            header: _header!,
-                            width: size.maxWidth,
-                            height: stateManager.headerHeight,
+                    child: ClipRRect(
+                      borderRadius: configuration.gridBorderRadius
+                          .resolve(TextDirection.ltr),
+                      child: Column(
+                        children: [
+                          if (stateManager.showHeader)
+                            _HeaderContainer(
+                              header: _header!,
+                              width: size.maxWidth,
+                              height: stateManager.headerHeight,
+                            ),
+                          _ColumnRowContainer(
+                            stateManager: stateManager,
+                            showFrozenColumn: _showFrozenColumn!,
+                            hasLeftFrozenColumns: _hasLeftFrozenColumns!,
+                            hasRightFrozenColumns: _hasRightFrozenColumns!,
                           ),
-                        _ColumnRowContainer(
-                          stateManager: stateManager,
-                          showFrozenColumn: _showFrozenColumn!,
-                          hasLeftFrozenColumns: _hasLeftFrozenColumns!,
-                          hasRightFrozenColumns: _hasRightFrozenColumns!,
-                        ),
-                        if (stateManager.showFooter)
-                          _FooterContainer(
-                            footer: _footer!,
-                            width: size.maxWidth,
-                            height: stateManager.footerHeight,
-                          ),
-                      ],
+                          if (stateManager.showFooter)
+                            _FooterContainer(
+                              footer: _footer!,
+                              width: size.maxWidth,
+                              height: stateManager.footerHeight,
+                            ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
